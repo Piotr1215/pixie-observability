@@ -1,0 +1,22 @@
+@startuml simple-http-flow
+
+!theme mars
+
+hide footbox
+
+participant Client as client
+participant "Cloud Load Balancer" as clb
+participant Ingress as ing
+participant Service as svc
+participant Pod as pod
+participant Container as cont
+
+client -> clb : API Request Initiated
+clb -> ing : Resolve URL
+ing -> svc : Redirect to responsible service
+svc -> pod : Use service to route request to a POD IP
+pod -> cont : Receive request on listening port and process
+[<- cont : return egress communication
+
+@enduml
+
